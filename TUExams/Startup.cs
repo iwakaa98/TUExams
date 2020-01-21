@@ -11,6 +11,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using TUExams.Data;
+using TUExams.Mappers;
+using TUExams.Mappers.Contracts;
+using TUExams.Services.Mappers;
+using TUExams.Services.Mappers.Contracts;
 using TUExams.Services.Services;
 using TUExams.Services.Services.Contracts;
 
@@ -35,6 +39,10 @@ namespace TUExams
 
             //Register services
             services.AddScoped<IExamService, ExamService>();
+            services.AddScoped<IFacultyService, FacultyService>();
+            //Register mappers
+            services.AddScoped<IFacultyViewModelMapper, FacultyViewModelMapper>();
+            services.AddScoped<IFacultyDTOMapper, FacultyDTOMapper>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }

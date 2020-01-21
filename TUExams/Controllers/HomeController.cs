@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using TUExams.Mappers.Contracts;
 using TUExams.Models;
 using TUExams.Services.Services.Contracts;
 
@@ -13,16 +14,23 @@ namespace TUExams.Controllers
     {
 
         private readonly IExamService _examService;
+        private readonly IFacultyService _facultyService;
+        private readonly IFacultyViewModelMapper _facultyViewModelMapper;
 
-        public HomeController(IExamService examService)
+        public HomeController(IExamService examService,
+            IFacultyService facultyService,
+            IFacultyViewModelMapper facultyViewModelMapper)
         {
             _examService = examService;
+            _facultyService = facultyService;
+            _facultyViewModelMapper = facultyViewModelMapper;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            _examService.CreateAsync();
-            return View();
+            var facultiesDTO = await _facultyService.GetFacultiesAsync();
+            var listviewmodel = _facultyViewModelMapper.MapFrom(facultiesDTO);
+            return View(new FacultyListViewModel(listviewmodel));
         }
 
         public IActionResult Privacy()
