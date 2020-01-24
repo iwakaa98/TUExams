@@ -43,6 +43,8 @@ namespace TUExams
             //Register mappers
             services.AddScoped<IFacultyViewModelMapper, FacultyViewModelMapper>();
             services.AddScoped<IFacultyDTOMapper, FacultyDTOMapper>();
+            services.AddScoped<IExamViewModelMapper, ExamViewModelMapper>();
+            services.AddScoped<IExamDTOMapper, ExamDTOMapper>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }

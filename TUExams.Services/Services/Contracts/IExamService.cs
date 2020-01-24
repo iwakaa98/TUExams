@@ -8,6 +8,11 @@ namespace TUExams.Services.Services.Contracts
 {
     public interface IExamService
     {
+
+       
+
          Task CreateAsync();
+
+        Task<ICollection<ExamDTO>> GetExamsAsync(string faculty, int course);
     }
 }

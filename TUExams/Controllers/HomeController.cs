@@ -32,16 +32,5 @@ namespace TUExams.Controllers
             var listviewmodel = _facultyViewModelMapper.MapFrom(facultiesDTO);
             return View(new FacultyListViewModel(listviewmodel));
         }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
     }
 }

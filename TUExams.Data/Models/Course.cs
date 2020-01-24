@@ -10,5 +10,6 @@ namespace TUExams.Data.Models
         public string Id { get; set; }
         public int Number { get; set; }
         public ICollection<Exam> Exams { get; set; }
+        
     }
 }

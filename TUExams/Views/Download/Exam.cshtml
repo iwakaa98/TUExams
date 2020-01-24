@@ -1,0 +1,115 @@
+﻿@model ExamListViewModel
+@{
+    Layout = null;
+}
+<html>
+<head>
+
+</head>
+<body id="datatest">
+    <div>
+
+        <center>
+            <h1>Технически Университет - София</h1>
+            <h3>
+                Г Р А Ф И К
+                <br />
+                на @Model.Session.ToLower() сесия за учебната @Model.Year/@Model.NextYear година
+                <br />
+                Курс
+                <font color="#CC0333">@Model.CourseNumber</font>
+                <br />
+                <font color="#CC0333">@Model.FacultyName</font>
+            </h3>
+        </center>
+        <center>
+            <table border cellspacing="0" cellpadding="2" width="700">
+                <thead>
+                    <tr>
+                        <td width="40%">
+                            <center>
+                                <b>
+                                    Дисциплина
+                                </b>
+                            </center>
+                        </td>
+
+                        <td width="10%">
+                            <center>
+                                <b>
+                                    Зала
+                                </b>
+                            </center>
+                        </td>
+                        <td width="10%">
+                            <center>
+                                <b>
+                                    Дата
+                                </b>
+                            </center>
+                        </td>
+                        <td width="10%">
+                            <center>
+                                <b>
+                                    Час
+                                </b>
+                            </center>
+                        </td>
+
+                        <td width="20%">
+                            <center>
+                                <b>
+                                    Продължителност
+                                </b>
+                            </center>
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Exams)
+                    {
+                        <tr>
+                            <td>
+                                <center>
+                                    <b>
+                                        @item.Name
+                                    </b>
+                                </center>
+                            </td>
+                            <td>
+                                <center>
+                                    <b>
+                                        @item.ExamHall
+                                    </b>
+                                </center>
+                            </td>
+                            <td>
+                                <center>
+                                    <b>
+                                        @item.Date.Day.@item.Date.Month.@item.Date.Year
+                                    </b>
+                                </center>
+                            </td>
+                            <td>
+                                <center>
+                                    <b>
+                                        @item.Hour:@item.Minutes
+                                    </b>
+                                </center>
+                            </td>
+                            <td>
+                                <center>
+                                    <b>
+                                        @item.Duration минути
+                                    </b>
+                                </center>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </center>
+    </div>
+</body>
+</html>
+

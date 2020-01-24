@@ -24,9 +24,8 @@ namespace TUExams.Services.Services
 
         public async Task<ICollection<FacultyDTO>> GetFacultiesAsync()
         {
-            
-            var faculties = await _context.Faculties.ToListAsync();
 
+            var faculties = await _context.Faculties.ToListAsync();
             return _facultyDTOMapper.MapFrom(faculties);
         }
     }

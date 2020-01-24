@@ -2,7 +2,7 @@
 @{
     ViewData["Title"] = "Home Page";
 }
-
+<div id="testing2"></div>
 <div class="text-center">
     <h1 class="display-4">Изпитни Сесии</h1>
     <p>Моля изберете Вашият факултет</p>
@@ -13,20 +13,6 @@
             <option value="@item.Name">@item.Name</option>
         }
     </select>
-
-    @*<div class="small_box_navigation seperation_specilities" style="display:block">
-            <table class="simContTable" cellpadding="0" cellspacing="0">
-                <thead>
-                    <tr style="background-color: rgb(232,233,236)">
-                        <td>Учебна година</td>
-                        <td>Сесия</td>
-                        <td>Факултет</td>
-                        <td>Курс</td>
-                        <td>Изтегли</td>
-                    </tr>
-                </thead>
-            </table>
-        </div>*@
     <br />
     <br />
     <br />
@@ -51,39 +37,8 @@
     </div>
 </div>
 
-<script>
-    function changeSelect() {
-        let div = document.getElementById("showhide");
-        let temp = 1;
-        let year = new Date().getFullYear();
-        let month = new Date().getMonth() + 1;
-        let session = "Зимна";
-        if (month >= 2 && month < 9) {
-            session = "Лятна";
-        }
-        if (month < 9) {
-            year -= 1;
-        }
-        let selected = document.getElementById("mySelect").value;
-        if (selected === "--Избери--") {
-            div.style.display = "none";
-        }
-        else {
-            div.style.display = "block";
-            let insertinfo = document.getElementById("insertinfohere");
-            insertinfo.innerHTML = `
-                    @for(int i=0;i<4;i++)
-                    {
-                        <tr>
-                            <td>${year}/${year+1}</td>
-                            <td>${session}</td>
-                            <td>${selected}</td>
-                            <td>${temp++}</td>
-                            <td>Програма</td>
-                        </tr>
-                    }
-            `
-        }
+<div  style="display:none" id="testagain"></div>
+<script src="~/js/html2canvas.js"></script>
 
-    }
-</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"></script>
+<script src="~/js/FacultyExam.js"> </script>
