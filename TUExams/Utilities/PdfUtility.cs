@@ -1,25 +1,38 @@
-﻿@model ExamListViewModel
-@{
-    Layout = null;
-}
-<html>
-<head>
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using TUExams.Models;
 
-</head>
-<body id='datatest'>
-    <div>
+namespace TUExams.Utilities
+{
+    public class PdfUtility
+    {
+        public static string GetHTMLString(ExamListViewModel model)
+        {
+            
 
-        <center>
+            var sb = new StringBuilder();
+            sb.AppendFormat(@"
+        <html>
+        <head>
+
+        </head>
+        <body id='datatest'>
+            <div>
+
+            <center>
             <h1>Технически Университет - София</h1>
             <h3>
                 Г Р А Ф И К
                 <br />
-                на зимна сесия за учебната 2019/2020 година
+                на {0} сесия за учебната {1}/{2} година
                 <br />
                 Курс
-                <font color='#CC0333'>1</font>
+                <font color='#CC0333'>{3}</font>
                 <br />
-                <font color='#CC0333'>факултетчето</font>
+                <font color='#CC0333'>{4}</font>
             </h3>
         </center>
         <center>
@@ -66,50 +79,61 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in Model.Exams)
-                    {
+                
+                        ",model.Session.ToLower(),model.Year,model.NextYear,model.CourseNumber,model.FacultyName);
+
+
+            foreach (var emp in model.Exams)
+            {
+                sb.AppendFormat(@"
                         <tr>
                             <td>
                                 <center>
                                     <b>
-                                        @item.Name
+                                        {0}
                                     </b>
                                 </center>
                             </td>
                             <td>
                                 <center>
                                     <b>
-                                        @item.ExamHall
+                                        {1}
                                     </b>
                                 </center>
                             </td>
                             <td>
                                 <center>
                                     <b>
-                                        @item.Date.Day.@item.Date.Month.@item.Date.Year
+                                        {2}.{3}.{4} 
                                     </b>
                                 </center>
                             </td>
                             <td>
                                 <center>
                                     <b>
-                                        @item.Hour:@item.Minutes
+                                        {5}:{6}
                                     </b>
                                 </center>
                             </td>
                             <td>
                                 <center>
                                     <b>
-                                        @item.Duration минути
+                                        {7} минути
                                     </b>
                                 </center>
                             </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </center>
-    </div>
-</body>
-</html>
+                        </tr>", emp.Name, emp.ExamHall, emp.Date.Day, emp.Date.Month, emp.Date.Year, emp.Date.Hour, emp.Date.Minute, emp.Duration);
+            }
 
+            sb.Append(@"
+                             </tbody>
+                        </table>
+                     </center>
+                </div>
+            </body>
+        </html>");
+
+            return sb.ToString();
+        }
+    }
+}

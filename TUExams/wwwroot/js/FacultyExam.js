@@ -49,50 +49,63 @@ function Fill(fullinfo) {
             shortFaculty += faculty[i];
         }
     }
-    //shortFaculty = shortFaculty.replace(/\s/g, "");
-    console.log(shortFaculty);
+    
     let courseNumber = info[1];
-    $.ajax(
-        {
-            type: "GET",
-            url: "/Download/FillExamFormAsync",
-            data:
-            {
-                faculty: faculty,
-                course: courseNumber,
-                session: session,
-                year: year
-            },
-            success: function (data) {
+    window.location.replace (`/Download/FillExamFormAsync?faculty=${faculty}&course=${courseNumber}&session=${session}&year=${year}&shortFaculty=${shortFaculty}`);
 
-                //let pdf = new jsPDF('p', 'pt', 'a4');
-                //pdf.addHTML(response);
-                //console.log(pdf);
-                //pdf.save('web.pdf');
+    //$.ajax(
+    //    {
+    //        type: "GET",
+    //        url: "/Download/FillExamFormAsync",
+    //        data:
+    //        {
+    //            faculty: faculty,
+    //            course: courseNumber,
+    //            session: session,
+    //            year: year
+    //        },
+    //        success: function (data) {
+    //            console.log(data);
+    //            window.location = `@Url.Action("Download", "FillExamFormAsync", new { faculty = ${faculty}, course = ${courseNumber}, session=${session}, year=${year}  })`;
+    //            //let pdf = new jsPDF('p', 'pt', 'a4');
+    //            //pdf.addHTML(response);
+    //            //console.log(pdf);
+    //            //pdf.save('web.pdf');
 
-                //let hxr = new XMLHttpRequest();
-                //hxr.responseType = 'blob';
-                //hxr.onreadystatechange = function () {
+    //            //let hxr = new XMLHttpRequest();
+    //            //hxr.responseType = 'blob';
+    //            //hxr.onreadystatechange = function () {
 
-                //}
+    //            //}
+    //            //console.log(String(data));
+    //            //let datatosend = JSON.stringify(data);
+    //            //console.log(datatosend);
+    //            //$.ajax({
+    //            //    type: 'get',
+    //            //    url: "Download/Test",
+    //            //    data: {
+    //            //        MyHtml: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
+    //            //    }
 
-                let binaryData = [];
-                binaryData.push(data);
-                let newBlob = new Blob(binaryData, { type: "application/pdf" })
-                
-                let url = window.URL.createObjectURL(newBlob);
-                console.log(url);   
-                let a = document.createElement('a');
-                
-                a.href = url;
-                console.log(a);
-                a.download = `${shortFaculty}.${courseNumber}.html`;
-                document.body.append(a);
-                a.click();
-                a.remove();
-                window.URL.revokeObjectURL(url);
+    //            //})
+    //            //console.log(typeof ((data)));
+    //            //let binaryData = [];
+    //            //binaryData.push(data);
+    //            //let newBlob = new Blob(binaryData, { type: "application/pdf" })
+    //            //console.log(newBlob);
+    //            //let url = window.URL.createObjectURL(newBlob);
+    //            //console.log(url);   
+    //            //let a = document.createElement('a');
+                 
+    //            //a.href = url;
+    //            //console.log(a);
+    //            //a.download = `${shortFaculty}.${courseNumber}.pdf`;
+    //            //document.body.append(a);
+    //            //a.click();
+    //            //a.remove();
+    //            //window.URL.revokeObjectURL(url);
 
 
-            }
-        });
+    //        }
+    //    });
 }

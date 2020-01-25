@@ -1,16 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using IronPdf;
 using Microsoft.AspNetCore.Mvc;
 using TUExams.Mappers.Contracts;
 using TUExams.Models;
 using TUExams.Services.Services.Contracts;
+using TUExams.Utilities;
 
 namespace TUExams.Controllers
 {
     public class DownloadController : Controller
     {
+       
         private readonly IExamService _examService;
         private readonly IExamViewModelMapper _examViewModelMapper;
 
@@ -25,7 +25,8 @@ namespace TUExams.Controllers
             return View();
         }
 
-        public async Task<IActionResult> FillExamFormAsync(string faculty, int course, string session, int year)
+
+        public async Task<IActionResult> FillExamFormAsync(string faculty, int course, string session, int year, string shortFaculty)
         {
             var examsDTO = await _examService.GetExamsAsync(faculty, course);
             var listviewmodel = _examViewModelMapper.MapFrom(examsDTO);
@@ -38,11 +39,19 @@ namespace TUExams.Controllers
                 Year = year,
                 NextYear = year + 1
             };
-            return View("Exam", model);
-        }
-        public IActionResult Test()
-        {
-            return View();
+
+            var html = PdfUtility.GetHTMLString(model);
+
+            var Renderer = new HtmlToPdf();
+            var PDF = Renderer.RenderHtmlAsPdf(html);
+            var pdfname = shortFaculty + "_" + course.ToString() + ".pdf";
+            var OutputPath = "HtmlToPDF.pdf";
+            PDF.SaveAs(OutputPath);
+
+            byte[] fileBytes = System.IO.File.ReadAllBytes(@"HtmlToPDF.pdf");
+            string fileName = pdfname;
+            return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
+
         }
     }
 }
