@@ -22,10 +22,27 @@ namespace TUExams.Services.Services
             _examDTOMapper = examDTOMapper;
         }
 
-        public async Task CreateAsync()
+        public async Task CreateAsync(string facultyname, DateTime day, int hall, int duration, int coursenumber, string starttime, string examname)
         {
-            await Task.Delay(0);
+
+            var hours = Int32.Parse(starttime.Split(":")[0]);
+            var minutes = Int32.Parse(starttime.Split(":")[1]);
+            var date = new DateTime(day.Year, day.Month, day.Day, hours, minutes, 0);
+            var course = await _context.Courses.FirstOrDefaultAsync(x => x.Number == coursenumber);
+            var faculty = await _context.Faculties.FirstOrDefaultAsync(x => x.Name == facultyname);
+            var exam = new Exam
+            {
+                CourseId = course.Id,
+                FacultyId = faculty.Id,
+                Title = examname,
+                ExamHall = hall,
+                Date = date,
+                Duration = duration,
+            };
+            await _context.Exams.AddAsync(exam);
+            await _context.SaveChangesAsync();
         }
+
         public async Task<ICollection<ExamDTO>> GetExamsAsync(string faculty, int course)
         {
 
@@ -33,6 +50,22 @@ namespace TUExams.Services.Services
             return _examDTOMapper.MapFrom(exams);
         }
 
-       
+        public async Task<bool> IsValidDayAndHallAsync(int hall, DateTime day, string starttime)
+        {
+            var hours = Int32.Parse(starttime.Split(":")[0]);
+            var minutes = Int32.Parse(starttime.Split(":")[1]);
+
+            var boolean = await _context.Exams.AnyAsync(x => x.ExamHall == hall && x.Date.Year == day.Year && x.Date.Month == day.Month && x.Date.Day == day.Day && (int)x.Date.Hour == hours && (int)x.Date.Minute == minutes);
+            return !boolean;
+        }
+
+        public async Task<bool> IsValidExamNameAsync(string facultyname, string examname, int course)
+        {
+            var boolean = await _context.Exams.AnyAsync(x => x.Faculty.Name == facultyname && x.Title == examname && x.Course.Number == course);
+            return !boolean;
+        }
+
+
+
     }
 }

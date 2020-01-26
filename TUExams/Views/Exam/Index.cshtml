@@ -1,0 +1,58 @@
+﻿@model FacultyListViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<style>
+    span {
+        color: red;
+    }
+</style>
+    <div class="text-center">
+        <h1 class="display-4">Добавяне на изпити</h1>
+        <p>Моля изберете за кой факултет ще е изпитът</p>
+        <select id="selectFaculty" style="width:400px" onchange="changeFaculty()">
+            @foreach (var item in Model.FacultyViewModels)
+            {
+                <option value="@item.Name">@item.Name</option>
+            }
+        </select>
+        <br />
+        <p>Моля изберете за кой курс ще е изпитът</p>
+        <select id="selectCourse" onchange="changeCourse()">
+            @for (int i = 1; i <= 4; i++)
+            {
+                <option value="@i">@i</option>
+            }
+        </select>
+        <br />
+        <p>Моля въведете име на предмета, по който ще се проведе изпитът</p>
+        <input type="text" id="examname" />
+        <span id="wrongexamname"></span>
+        <br />
+        <p>Моля въведете в коя зала ще се проведе изпитът</p>
+        <input type="text" id="zala" />
+        <span id="wrongHall"></span>
+        <br />
+        <p>Моля въведете ден/месец/година, когато ще се проведе изпитът</p>
+        <input type="text" id="date" />
+        <span id="wrongDay"></span>
+        <br />
+        <p>Моля изберете час, за изпита</p>
+        <select id="selectTime" onchange="changeTime()">
+            <option value="8:00">8:00</option>
+            <option value="11:30">11:30</option>
+            <option value="15:30">15:30</option>
+        </select>
+        <p>Моля въведете колко време ще продължи изпитът (минути)</p>
+        <input id="duration" type="text" />
+        <span id="wrongduration"></span>
+        <br />
+        <br />
+        <button id="createExam">Създай</button>
+    </div>
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/js/exam.js"></script>
+

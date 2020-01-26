@@ -1,5 +1,8 @@
-﻿using System;
+﻿using IronPdf;
+using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,10 +12,9 @@ namespace TUExams.Utilities
 {
     public class PdfUtility
     {
+      
         public static string GetHTMLString(ExamListViewModel model)
         {
-            
-
             var sb = new StringBuilder();
             sb.AppendFormat(@"
         <html>
@@ -122,7 +124,7 @@ namespace TUExams.Utilities
                                     </b>
                                 </center>
                             </td>
-                        </tr>", emp.Name, emp.ExamHall, emp.Date.Day, emp.Date.Month, emp.Date.Year, emp.Date.Hour, emp.Date.Minute, emp.Duration);
+                        </tr>", emp.Name, emp.ExamHall, emp.Date.Day, emp.Date.Month, emp.Date.Year, emp.Date.Hour, emp.Date.Minute.ToString("D2"), emp.Duration);
             }
 
             sb.Append(@"
@@ -135,5 +137,6 @@ namespace TUExams.Utilities
 
             return sb.ToString();
         }
+        
     }
 }

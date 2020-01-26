@@ -19,32 +19,25 @@ namespace TUExams.Controllers
             _examService = examService;
             _examViewModelMapper = examViewModelMapper;
         }
-
-        public IActionResult Exam()
+        public async Task<IActionResult> FillExamFormAsync(ExamListViewModel vm)
         {
-            return View();
-        }
-
-
-        public async Task<IActionResult> FillExamFormAsync(string faculty, int course, string session, int year, string shortFaculty)
-        {
-            var examsDTO = await _examService.GetExamsAsync(faculty, course);
+            var examsDTO = await _examService.GetExamsAsync(vm.FacultyName, vm.CourseNumber);
             var listviewmodel = _examViewModelMapper.MapFrom(examsDTO);
             var model = new ExamListViewModel
             {
-                CourseNumber = course,
+                CourseNumber = vm.CourseNumber,
                 Exams = listviewmodel,
-                FacultyName = faculty,
-                Session = session,
-                Year = year,
-                NextYear = year + 1
+                FacultyName = vm.FacultyName,
+                Session = vm.Session,
+                Year = vm.Year,
+                NextYear = vm.Year + 1
             };
 
             var html = PdfUtility.GetHTMLString(model);
 
             var Renderer = new HtmlToPdf();
             var PDF = Renderer.RenderHtmlAsPdf(html);
-            var pdfname = shortFaculty + "_" + course.ToString() + ".pdf";
+            var pdfname = vm.Shortfaculty + "_" + vm.CourseNumber.ToString() + ".pdf";
             var OutputPath = "HtmlToPDF.pdf";
             PDF.SaveAs(OutputPath);
 

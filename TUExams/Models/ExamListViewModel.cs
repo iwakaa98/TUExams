@@ -12,6 +12,7 @@ namespace TUExams.Models
         public int NextYear { get; set; }
         public string FacultyName { get; set; }
         public int CourseNumber { get; set; }
+        public string Shortfaculty { get; set; }
         public ICollection<ExamViewModel> Exams { get; set; }
     }
 }

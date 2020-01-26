@@ -13,15 +13,12 @@ namespace TUExams.Controllers
     public class HomeController : Controller
     {
 
-        private readonly IExamService _examService;
         private readonly IFacultyService _facultyService;
         private readonly IFacultyViewModelMapper _facultyViewModelMapper;
 
-        public HomeController(IExamService examService,
-            IFacultyService facultyService,
+        public HomeController(IFacultyService facultyService,
             IFacultyViewModelMapper facultyViewModelMapper)
         {
-            _examService = examService;
             _facultyService = facultyService;
             _facultyViewModelMapper = facultyViewModelMapper;
         }

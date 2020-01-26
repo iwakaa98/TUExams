@@ -51,7 +51,7 @@ function Fill(fullinfo) {
     }
     
     let courseNumber = info[1];
-    window.location.replace (`/Download/FillExamFormAsync?faculty=${faculty}&course=${courseNumber}&session=${session}&year=${year}&shortFaculty=${shortFaculty}`);
+    window.location.replace (`/Download/FillExamFormAsync?facultyname=${faculty}&coursenumber=${courseNumber}&session=${session}&year=${year}&shortFaculty=${shortFaculty}`);
 
     //$.ajax(
     //    {
