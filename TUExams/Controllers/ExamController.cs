@@ -29,19 +29,19 @@ namespace TUExams.Controllers
             return View(new FacultyListViewModel(listviewmodel));
         }
 
-        public async Task<string> CreateExamAsync(string facultyname,DateTime day,int hall,int duration,int course,string starttime, string examname)
+        public async Task<string> CreateExamAsync(string facultyname,DateTime dayy,int hall,int duration,int course,string starttime, string examname)
         {
             if(!await _examService.IsValidExamNameAsync(facultyname,examname, course))
             {
                 return "false examname";
             }
-            else if(!await _examService.IsValidDayAndHallAsync(hall,day,starttime))
+            else if(!await _examService.IsValidDayAndHallAsync(hall, dayy, starttime))
             {
                 return "false dayandhall";
             }
             else
             {
-                await _examService.CreateAsync(facultyname, day, hall, duration, course, starttime, examname);
+                await _examService.CreateAsync(facultyname, dayy, hall, duration, course, starttime, examname);
             }
 
             return "true";
